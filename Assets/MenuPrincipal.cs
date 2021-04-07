@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuPrincipal : MonoBehaviour
 {
+    public GameObject settingsPanel;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,12 +17,22 @@ public class MenuPrincipal : MonoBehaviour
     {
         
     }
-
+    public void EmpezarJuego()
+    {
+        SceneManager.LoadScene(1);
+    }
     public void SalirJuego()
     {
         Debug.Log("Quitting");
         Application.Quit();
-        App
 
+    }
+    public void OpenSettings()
+    {
+        settingsPanel.SetActive(true);
+    }
+    public void CloseSettings()
+    {
+        settingsPanel.SetActive(false);
     }
 }
