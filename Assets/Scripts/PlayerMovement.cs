@@ -17,22 +17,27 @@ public class PlayerMovement : MonoBehaviour
 
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
-    public Transform attackPoint;
-    public float multiplier = 0.2f;
+    private Transform attackPoint;
+    public float multiplier;
     public int damage = 20;
 
     public GameObject arrow;
     public float projectileForce = 2f;
-
+    private Rigidbody2D rigidbody;
+  
 
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        rigidbody = GetComponent<Rigidbody2D>();
         AttackDir = Vector2.zero;
         spriterenderer = this.GetComponent<SpriteRenderer>();
         spriterenderer.sprite = sword;
+        GameObject newGameObject = new GameObject();
+        attackPoint = newGameObject.transform;
+
     }
 
     // Update is called once per frame
@@ -48,11 +53,13 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         transform.Translate(direction * speed * Time.deltaTime);
+        //rigidbody.MovePosition(rigidbody.position + direction * speed * Time.deltaTime);
         if (direction.x != 0 || direction.y != 0)
             SetAnimatorMovement(direction);
+            
         else
         {
-            if(isSword)
+            if (isSword)
             {
                 animator.SetLayerWeight(1, 0);
                 animator.SetLayerWeight(2, 0);
@@ -132,10 +139,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void Attack()
     {
-        imAttacking = true;
         if(isSword)
         {
-            attackPoint.position= new Vector2(this.transform.position.x+AttackDir.x*multiplier, this.transform.position.y+AttackDir.y*multiplier);
+            attackPoint.position= new Vector3(this.transform.position.x + (AttackDir.x * multiplier), this.transform.position.y + (AttackDir.y * multiplier),0);
             Collider2D[] hitEnemies=Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
             foreach(Collider2D enemy in hitEnemies)
             {
@@ -153,6 +159,8 @@ public class PlayerMovement : MonoBehaviour
             GameObject arrow_thrown = Instantiate(arrow, transform.position, Quaternion.Euler(0, 0, angulo));
             arrow_thrown.GetComponent<Rigidbody2D>().velocity = AttackDir * projectileForce;
         }
+
+        imAttacking = true;
         animator.SetTrigger("Attack");
         
     }
