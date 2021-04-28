@@ -28,8 +28,11 @@ public class PlayerManagement : MonoBehaviour
     public int damage = 20;
 
     public GameObject arrow;
-    public float projectileForce = 2f;
+    public float projectileForce = 5f;
     private Rigidbody2D rb;
+    private bool shot = false;
+    private float fireTime = 0.9f;
+    private float fireTimer;
 
     private PlayerMovement pm;
 
@@ -78,6 +81,13 @@ public class PlayerManagement : MonoBehaviour
         else
         {
             direction = Vector2.zero;
+        }
+
+        if(shot)
+        {
+            Debug.Log("Timer: " + fireTimer + "Tiempo actual: " + (Time.time - fireTime));
+            if (fireTimer < Time.time - fireTime)
+                Fire();
         }
 
     }
@@ -143,14 +153,8 @@ public class PlayerManagement : MonoBehaviour
             {
                 flechas--;
                 display.setAmmo(flechas);
-                float angulo = 0;
-                if (AttackDir.x != 0)
-                    angulo = Mathf.Acos(AttackDir.x);
-                else
-                    angulo = Mathf.Asin(AttackDir.y);
-                angulo = angulo * 180 / Mathf.PI;
-                GameObject arrow_thrown = Instantiate(arrow, transform.position, Quaternion.Euler(0, 0, angulo));
-                arrow_thrown.GetComponent<Rigidbody2D>().velocity = AttackDir * projectileForce;
+                fireTimer = Time.time;
+                shot = true;
                 imAttacking = true;
                 animator.SetTrigger("Attack");
             }
@@ -159,6 +163,19 @@ public class PlayerManagement : MonoBehaviour
 
         
 
+    }
+
+    public void Fire()
+    {
+        shot = false;
+        float angulo = 0;
+        if (AttackDir.x != 0)
+            angulo = Mathf.Acos(AttackDir.x);
+        else
+            angulo = Mathf.Asin(AttackDir.y);
+        angulo = angulo * 180 / Mathf.PI;
+        GameObject arrow_thrown = Instantiate(arrow, transform.position, Quaternion.Euler(0, 0, angulo));
+        arrow_thrown.GetComponent<Rigidbody2D>().velocity = AttackDir * projectileForce;
     }
 
     public void OnDrawGizmosSelected()
