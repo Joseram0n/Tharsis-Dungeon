@@ -18,14 +18,14 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void Move(Vector2 Direction)
+    public void Move(Vector2 direction)
     {
-        rb.velocity = new Vector2(Direction.x * speed, Direction.y * speed);
+        rb.velocity = new Vector2(direction.x * speed, direction.y * speed);
 
-        if (Direction.x != 0 || Direction.y != 0) // se mueve
+        if (direction.x != 0 || direction.y != 0) // se mueve
         {
-            SetAnimatorMovement(Direction);
-            AttackDir = Direction;
+            SetAnimatorMovement(direction);
+            AttackDir = direction;
         }
         else
             SetAnimatorMovement(AttackDir);

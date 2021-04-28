@@ -191,6 +191,9 @@ MonoBehaviour:
   damage: 20
   arrow: {fileID: 4374591444793941668, guid: f80aa0bfd1fe4b7499dd8d31425e8990, type: 3}
   projectileForce: 5
+  flechas: 10
+  monedas: 0
+  pociones: 1
 --- !u!114 &1841185731
 MonoBehaviour:
   m_ObjectHideFlags: 0

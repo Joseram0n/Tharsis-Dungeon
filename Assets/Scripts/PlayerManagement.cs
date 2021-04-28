@@ -33,6 +33,11 @@ public class PlayerManagement : MonoBehaviour
 
     private PlayerMovement pm;
 
+    public int flechas;
+    public int monedas;
+    public int pociones;
+
+    DisplayManagement display;
 
 
 
@@ -40,7 +45,11 @@ public class PlayerManagement : MonoBehaviour
     {
         //Vida, items
         currentHealth = maxHealth;
-        canvas.GetComponent<DisplayManagement>().setMaxHealth(maxHealth);
+        display = canvas.GetComponent<DisplayManagement>();
+        display.setMaxHealth(maxHealth);
+        display.setAmmo(flechas);
+        display.setGold(monedas);
+        display.setPots(pociones);
 
         //Movimiento
         animator = GetComponent<Animator>();
@@ -54,7 +63,6 @@ public class PlayerManagement : MonoBehaviour
         //Punto de ataque de la espada
         GameObject newGameObject = new GameObject();
         attackPoint = newGameObject.transform;
-        Destroy(newGameObject);
 
 
         
@@ -83,7 +91,6 @@ public class PlayerManagement : MonoBehaviour
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
         direction = new Vector2(moveX, moveY);
-        Debug.Log("X: " + direction.x + "Y: "+direction.y);
 
         if (direction.x != 0 || direction.y != 0)
         {
@@ -99,6 +106,8 @@ public class PlayerManagement : MonoBehaviour
             changeSprite();
         if (Input.GetKeyDown(KeyCode.Space))
             Attack();
+        if (Input.GetKeyDown(KeyCode.H))
+            heal();
     }
 
     public void changeSprite()
@@ -119,26 +128,36 @@ public class PlayerManagement : MonoBehaviour
         if (animator.GetBool("hasSword"))
         {
             attackPoint.position = new Vector3(this.transform.position.x + (AttackDir.x * multiplier), this.transform.position.y + (AttackDir.y * multiplier), 0);
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange);
             foreach (Collider2D enemy in hitEnemies)
             {
-                enemy.GetComponent<EnemyRecieveDamage>().DealDamage(damage);
+                if (enemy.TryGetComponent<EnemyRecieveDamage>(out EnemyRecieveDamage componente))
+                    componente.DealDamage(damage);
             }
+            imAttacking = true;
+            animator.SetTrigger("Attack");
         }
         else
         {
-            float angulo = 0;
-            if (AttackDir.x != 0)
-                angulo = Mathf.Acos(AttackDir.x);
-            else
-                angulo = Mathf.Asin(AttackDir.y);
-            angulo = angulo * 180 / Mathf.PI;
-            GameObject arrow_thrown = Instantiate(arrow, transform.position, Quaternion.Euler(0, 0, angulo));
-            arrow_thrown.GetComponent<Rigidbody2D>().velocity = AttackDir * projectileForce;
+            if(flechas>0)
+            {
+                flechas--;
+                display.setAmmo(flechas);
+                float angulo = 0;
+                if (AttackDir.x != 0)
+                    angulo = Mathf.Acos(AttackDir.x);
+                else
+                    angulo = Mathf.Asin(AttackDir.y);
+                angulo = angulo * 180 / Mathf.PI;
+                GameObject arrow_thrown = Instantiate(arrow, transform.position, Quaternion.Euler(0, 0, angulo));
+                arrow_thrown.GetComponent<Rigidbody2D>().velocity = AttackDir * projectileForce;
+                imAttacking = true;
+                animator.SetTrigger("Attack");
+            }
+            
         }
 
-        imAttacking = true;
-        animator.SetTrigger("Attack");
+        
 
     }
 
@@ -154,12 +173,18 @@ public class PlayerManagement : MonoBehaviour
     public void takeDamage(int damage)
     {
         currentHealth-=damage; //Si llega a 0, muere
-        canvas.GetComponent<DisplayManagement>().setHealth(currentHealth);
+        display.setHealth(currentHealth);
     }
     public void heal()
     {
-        currentHealth = maxHealth;
-        canvas.GetComponent<DisplayManagement>().setHealth(maxHealth);
+        if(pociones>0)
+        {
+            pociones--;
+            display.setPots(pociones);
+            currentHealth = maxHealth;
+            display.setHealth(maxHealth);
+        }
+        
     }
 
     public bool CheckAttack()

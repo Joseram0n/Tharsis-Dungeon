@@ -12,19 +12,8 @@ public class DisplayManagement : MonoBehaviour
     public Text potsText;
     public int health = 20;
     public Slider slider;
-    public int contador;
 
 
-    public void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.K))
-        {
-            setAmmo(contador);
-            setGold(contador);
-            setPots(contador);
-            contador++;
-        }
-    }
     public void setMaxHealth(int health)
     {
         slider.maxValue = health;
@@ -39,13 +28,28 @@ public class DisplayManagement : MonoBehaviour
     public void setAmmo(int ammo)
     {
         ammoText.text = ""+ammo;
+
+        if (ammo == 0)
+            ammoText.color = Color.red;
+        else
+            ammoText.color = Color.black;
     }
     public void setGold(int gold)
     {
         goldText.text = ""+gold;
+
+        if (gold == 0)
+            goldText.color = Color.red;
+        else
+            goldText.color = Color.black;
     }
     public void setPots(int pots)
     {
         potsText.text = ""+pots;
+
+        if (pots == 0)
+            potsText.color = Color.red;
+        else
+            potsText.color = Color.black;
     }
 }
