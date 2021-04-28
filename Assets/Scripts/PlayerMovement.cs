@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject arrow;
     public float projectileForce = 2f;
-    private Rigidbody2D rigidbody;
+    private Rigidbody2D rb;
   
 
 
@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        rigidbody = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         AttackDir = Vector2.zero;
         spriterenderer = this.GetComponent<SpriteRenderer>();
         spriterenderer.sprite = sword;
@@ -46,56 +46,41 @@ public class PlayerMovement : MonoBehaviour
         if(!CheckAttack())
         {
             TakeInput();
-            Move();
-        } 
+        }
+        else
+        {
+            direction = Vector2.zero;
+        }
+    }
+    
+    void FixedUpdate()
+    {
+        Move();
     }
 
     private void Move()
     {
-        transform.Translate(direction * speed * Time.deltaTime);
-        //rigidbody.MovePosition(rigidbody.position + direction * speed * Time.deltaTime);
+        rb.velocity = new Vector2(direction.x * speed, direction.y * speed);
         if (direction.x != 0 || direction.y != 0)
             SetAnimatorMovement(direction);
-            
         else
-        {
-            if (isSword)
-            {
-                animator.SetLayerWeight(1, 0);
-                animator.SetLayerWeight(2, 0);
-                animator.SetLayerWeight(3, 0);
-            }
-            else
-            {
-                animator.SetLayerWeight(1, 1);
-                animator.SetLayerWeight(0, 0);
-                animator.SetLayerWeight(2, 0);
-                animator.SetLayerWeight(3, 0);
-
-            }
-        }
+            SetAnimatorMovement(AttackDir);
     }
     private void TakeInput()
     {
-        direction = Vector2.zero;
-        if (Input.GetKey(KeyCode.W))
-        {
-            direction += Vector2.up;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            direction += Vector2.left;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            direction += Vector2.right;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            direction += Vector2.down;
-        }
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveY = Input.GetAxisRaw("Vertical");
+        direction = new Vector2(moveX,moveY);
+        
         if (direction.x != 0 || direction.y != 0)
+        {
             AttackDir = direction;
+            animator.SetBool("isMoving", true);
+        }
+        else
+        {
+            animator.SetBool("isMoving", false);
+        }
 
         if (Input.GetKeyDown(KeyCode.E))
             changeSprite();
@@ -105,20 +90,7 @@ public class PlayerMovement : MonoBehaviour
     
     private void SetAnimatorMovement(Vector2 direction)
     {
-        if (isSword)
-        {
-            animator.SetLayerWeight(0, 0);
-            animator.SetLayerWeight(1, 0);
-            animator.SetLayerWeight(2, 1);
-            animator.SetLayerWeight(3, 0);
-        }
-        else
-        {
-            animator.SetLayerWeight(0, 0);
-            animator.SetLayerWeight(1, 0);
-            animator.SetLayerWeight(2, 0);
-            animator.SetLayerWeight(3, 1);
-        }
+
         animator.SetFloat("xDir", direction.x);
         animator.SetFloat("yDir", direction.y);
     }
@@ -134,12 +106,12 @@ public class PlayerMovement : MonoBehaviour
         {
             this.GetComponent<SpriteRenderer>().sprite = sword;
         }
-        isSword = !isSword;
+        animator.SetBool("hasSword", !animator.GetBool("hasSword"));
     }
 
     public void Attack()
     {
-        if(isSword)
+        if(animator.GetBool("hasSword"))
         {
             attackPoint.position= new Vector3(this.transform.position.x + (AttackDir.x * multiplier), this.transform.position.y + (AttackDir.y * multiplier),0);
             Collider2D[] hitEnemies=Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
@@ -166,9 +138,8 @@ public class PlayerMovement : MonoBehaviour
     }
     public bool CheckAttack()
     {
-        for (int i = 0; i < 4; i++)
-            if (animator.GetCurrentAnimatorStateInfo(i).IsName("Estado_Transicion"))
-                imAttacking = false;
+       if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack_Sword")&& !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack_Bow"))
+            imAttacking = false;
         return imAttacking;
     }
 

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3858493053144550468}
   - component: {fileID: 3858493053144550472}
   - component: {fileID: 3858493053144550471}
-  - component: {fileID: 3858493053144550473}
   - component: {fileID: 5348344709274074145}
   m_Layer: 3
   m_Name: Player
@@ -151,26 +150,10 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
-  attackPoint: {fileID: 0}
   multiplier: 0.2
   damage: 20
   arrow: {fileID: 4374591444793941668, guid: f80aa0bfd1fe4b7499dd8d31425e8990, type: 3}
   projectileForce: 2
---- !u!114 &3858493053144550473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3858493053144550467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 905bc00b8559c5942bff30c7588831bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 6
-  currentHealth: 0
-  healthbar: {fileID: 0}
 --- !u!50 &5348344709274074145
 Rigidbody2D:
   serializedVersion: 4
