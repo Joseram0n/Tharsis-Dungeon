@@ -12,8 +12,10 @@ GameObject:
   - component: {fileID: 3858493053144550469}
   - component: {fileID: 3858493053144550468}
   - component: {fileID: 3858493053144550472}
-  - component: {fileID: 3858493053144550471}
   - component: {fileID: 5348344709274074145}
+  - component: {fileID: 3979093488506854631}
+  - component: {fileID: 1841185730}
+  - component: {fileID: 1841185731}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -131,29 +133,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.26865986, y: 0.16122115}
   m_EdgeRadius: 0
---- !u!114 &3858493053144550471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3858493053144550467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 016d7d42bcd305946a24242c0967adb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0.5
-  arco: {fileID: 2225549763712610494, guid: 3cbe805865a77d0458000b625bce0689, type: 3}
-  sword: {fileID: -5128796963256370029, guid: ebefa4c20470c8640ac0680373077221, type: 3}
-  attackRange: 0.2
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 64
-  multiplier: 0.2
-  damage: 20
-  arrow: {fileID: 4374591444793941668, guid: f80aa0bfd1fe4b7499dd8d31425e8990, type: 3}
-  projectileForce: 2
 --- !u!50 &5348344709274074145
 Rigidbody2D:
   serializedVersion: 4
@@ -169,9 +148,59 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
+--- !u!114 &3979093488506854631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3858493053144550467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2eabc30f00458004f8bf8b5d7c74a101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1841185730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3858493053144550467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 905bc00b8559c5942bff30c7588831bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 80
+  canvas: {fileID: 0}
+  arco: {fileID: 2225549763712610494, guid: 3cbe805865a77d0458000b625bce0689, type: 3}
+  sword: {fileID: -5128796963256370029, guid: ebefa4c20470c8640ac0680373077221, type: 3}
+  attackRange: 0.5
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  multiplier: 0
+  damage: 20
+  arrow: {fileID: 4374591444793941668, guid: f80aa0bfd1fe4b7499dd8d31425e8990, type: 3}
+  projectileForce: 5
+--- !u!114 &1841185731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3858493053144550467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7977547ca67d6de48af1625a2a5835e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
