@@ -85,7 +85,6 @@ public class PlayerManagement : MonoBehaviour
 
         if(shot)
         {
-            Debug.Log("Timer: " + fireTimer + "Tiempo actual: " + (Time.time - fireTime));
             if (fireTimer < Time.time - fireTime)
                 Fire();
         }

@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 8712657651230361508}
   - component: {fileID: 8712657651230361509}
   - component: {fileID: 8712657651230361513}
-  - component: {fileID: 8712657651230361510}
   - component: {fileID: 8712657651230361512}
   - component: {fileID: 530490346758240192}
+  - component: {fileID: 7538199422928690394}
+  - component: {fileID: 3163638857919265024}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Player
@@ -132,29 +133,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.7559395, y: 0.576067}
   m_EdgeRadius: 0
---- !u!114 &8712657651230361510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8712657651230361506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 016d7d42bcd305946a24242c0967adb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 4
-  arco: {fileID: 2225549763712610494, guid: 3cbe805865a77d0458000b625bce0689, type: 3}
-  sword: {fileID: -5128796963256370029, guid: ebefa4c20470c8640ac0680373077221, type: 3}
-  attackRange: 0.2
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 64
-  multiplier: 0.2
-  damage: 20
-  arrow: {fileID: 4374591444793941668, guid: f80aa0bfd1fe4b7499dd8d31425e8990, type: 3}
-  projectileForce: 2
 --- !u!114 &8712657651230361512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,7 +147,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 6
   currentHealth: 0
-  healthbar: {fileID: 0}
+  canvas: {fileID: 76571550379926861, guid: 2ee57552a71b7904bb164609fb54dc48, type: 3}
+  arco: {fileID: 2225549763712610494, guid: 3cbe805865a77d0458000b625bce0689, type: 3}
+  sword: {fileID: -5128796963256370029, guid: ebefa4c20470c8640ac0680373077221, type: 3}
+  attackRange: 0.5
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  multiplier: 0
+  damage: 20
+  arrow: {fileID: 4374591444793941668, guid: f80aa0bfd1fe4b7499dd8d31425e8990, type: 3}
+  projectileForce: 5
+  flechas: 10
+  monedas: 0
+  pociones: 1
 --- !u!50 &530490346758240192
 Rigidbody2D:
   serializedVersion: 4
@@ -191,3 +182,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &7538199422928690394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8712657651230361506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2eabc30f00458004f8bf8b5d7c74a101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3163638857919265024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8712657651230361506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7977547ca67d6de48af1625a2a5835e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
