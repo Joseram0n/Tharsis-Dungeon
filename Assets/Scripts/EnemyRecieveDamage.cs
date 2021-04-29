@@ -16,7 +16,7 @@ public class EnemyRecieveDamage : MonoBehaviour
     {
         
     }
-    public void DealDamage(int damage)
+    public void TakeDamage(int damage)
     {
         health -= damage;
     }

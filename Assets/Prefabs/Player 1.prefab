@@ -96,7 +96,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -5128796963256370029, guid: ebefa4c20470c8640ac0680373077221, type: 3}
+  m_Sprite: {fileID: -5128796963256370029, guid: ebefa4c20470c8640ac0680373077221,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -147,7 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 6
   currentHealth: 0
-  canvas: {fileID: 76571550379926861, guid: 2ee57552a71b7904bb164609fb54dc48, type: 3}
+  canvas: {fileID: 0}
   arco: {fileID: 2225549763712610494, guid: 3cbe805865a77d0458000b625bce0689, type: 3}
   sword: {fileID: -5128796963256370029, guid: ebefa4c20470c8640ac0680373077221, type: 3}
   attackRange: 0.5
@@ -161,6 +162,7 @@ MonoBehaviour:
   flechas: 10
   monedas: 0
   pociones: 1
+  enemigosMatados: 0
 --- !u!50 &530490346758240192
 Rigidbody2D:
   serializedVersion: 4

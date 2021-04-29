@@ -42,17 +42,34 @@ public class PlayerManagement : MonoBehaviour
 
     DisplayManagement display;
 
+    public int enemigosMatados = 0;
+
+    private static PlayerManagement Instance;
 
 
     void Start()
     {
+
+        /*
+        //Instanciacion
+        if (Instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        else
+        {
+            Instance = this;
+            GameObject.DontDestroyOnLoad(this.gameObject);
+        }
+
+        */
+
+
+
         //Vida, items
         currentHealth = maxHealth;
-        display = canvas.GetComponent<DisplayManagement>();
-        display.setMaxHealth(maxHealth);
-        display.setAmmo(flechas);
-        display.setGold(monedas);
-        display.setPots(pociones);
+        
 
         //Movimiento
         animator = GetComponent<Animator>();
@@ -67,8 +84,12 @@ public class PlayerManagement : MonoBehaviour
         GameObject newGameObject = new GameObject();
         attackPoint = newGameObject.transform;
 
+        display = canvas.GetComponent<DisplayManagement>();
+        display.setMaxHealth(maxHealth);
+        display.setAmmo(flechas);
+        display.setGold(monedas);
+        display.setPots(pociones);
 
-        
     }
 
     // Update is called once per frame
@@ -88,6 +109,7 @@ public class PlayerManagement : MonoBehaviour
             if (fireTimer < Time.time - fireTime)
                 Fire();
         }
+
 
     }
     private void FixedUpdate()
@@ -140,8 +162,8 @@ public class PlayerManagement : MonoBehaviour
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange);
             foreach (Collider2D enemy in hitEnemies)
             {
-                if (enemy.TryGetComponent<EnemyRecieveDamage>(out EnemyRecieveDamage componente))
-                    componente.DealDamage(damage);
+                if (enemy.TryGetComponent<Enemy>(out Enemy componente))
+                    componente.TakeDamage(damage);
             }
             imAttacking = true;
             animator.SetTrigger("Attack");
@@ -211,14 +233,36 @@ public class PlayerManagement : MonoBehaviour
     }
 
 
+    public void GainLoot(string nombre)
+    {
+        int cantidad=0;
+        switch(nombre)
+        {
+            case "Moneda(Clone)":
+                cantidad = Random.Range(1, 10);
+                monedas += cantidad;
+                display.setGold(monedas);
+                Debug.Log("+ " + cantidad + " " + nombre + "!");
 
+                break;
+            case "Poción(Clone)":
+                cantidad = 1;
+                pociones += cantidad;
+                display.setPots(pociones);
+                Debug.Log("+ " + cantidad + " " + nombre + "!");
 
+                break;
+            case "Flecha(Clone)":
+                cantidad = Random.Range(3, 8);
+                flechas += cantidad;
+                display.setAmmo(flechas);
+                Debug.Log("+ " + cantidad + " " + nombre + "!");
 
+                break;
+        }
 
-
-
-
-
+        enemigosMatados++;
+    }
 
 
 
