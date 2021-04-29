@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2482976050705745545}
   - component: {fileID: 2482976050705745546}
   m_Layer: 0
-  m_Name: goblin 1
+  m_Name: goblin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -178,6 +178,9 @@ MonoBehaviour:
   patrolDistance: 6
   startWaitTime: 1
   maxWaitTime: 4.59
+  coin: {fileID: 0}
+  arrow: {fileID: 0}
+  potion: {fileID: 0}
 --- !u!114 &2482976050705745546
 MonoBehaviour:
   m_ObjectHideFlags: 0

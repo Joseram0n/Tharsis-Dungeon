@@ -36,6 +36,10 @@ public class Enemy : MonoBehaviour
     Rigidbody2D rb;
     Animator anim;
 
+    public GameObject coin;
+    public GameObject arrow;
+    public GameObject potion;
+
     // Start is called before the first frame update
     void Start()
     {
