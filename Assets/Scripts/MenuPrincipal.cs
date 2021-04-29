@@ -2,21 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuPrincipal : MonoBehaviour
 {
     public GameObject settingsPanel;
     public GameObject mainPanel;
+    Resolution[] resolutions;
+    public Dropdown resolutionsDropdown;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
-    }
+        resolutions=Screen.resolutions;
+        resolutionsDropdown.ClearOptions();
+        List<string> options = new List<string>();
+        int currentResolutionIndex = 0;
+        for(int i=0;i<resolutions.Length;i++)
+        {
+            string option = resolutions[i].width + "x" + resolutions[i].height;
+            options.Add(option);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+                currentResolutionIndex = i;
+        }
+        resolutionsDropdown.AddOptions(options);
+        resolutionsDropdown.value = currentResolutionIndex;
+        resolutionsDropdown.RefreshShownValue();
     }
     public void EmpezarJuego()
     {
@@ -37,5 +48,12 @@ public class MenuPrincipal : MonoBehaviour
     {
         settingsPanel.SetActive(false);
         mainPanel.SetActive(true);
+    }
+
+
+
+    public void setVariables()
+    {
+        GlobalVariables.Set("Volume", settingsPanel.GetComponent<Slider>().value);
     }
 }
