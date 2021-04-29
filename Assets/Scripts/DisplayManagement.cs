@@ -12,7 +12,22 @@ public class DisplayManagement : MonoBehaviour
     public Text potsText;
     public int health = 20;
     public Slider slider;
+    private DisplayManagement Instance;
 
+    void Start()
+    {
+        /*
+        if (Instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        else
+        {
+            Instance = this;
+            GameObject.DontDestroyOnLoad(this.gameObject);
+        }*/
+    }
 
     public void setMaxHealth(int health)
     {
@@ -37,11 +52,6 @@ public class DisplayManagement : MonoBehaviour
     public void setGold(int gold)
     {
         goldText.text = ""+gold;
-
-        if (gold == 0)
-            goldText.color = Color.red;
-        else
-            goldText.color = Color.black;
     }
     public void setPots(int pots)
     {
