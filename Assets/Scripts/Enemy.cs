@@ -40,6 +40,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         homePosition = transform.position;
+        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
