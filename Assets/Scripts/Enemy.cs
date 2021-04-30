@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour
     public float maxWaitTime;
     private float waitTime;
 
+    private float attackRange = 1f;
 
     Path path;
     int currentWaypoint = 0;
@@ -41,6 +42,13 @@ public class Enemy : MonoBehaviour
     public GameObject coin;
     public GameObject potion;
 
+    public bool imAttacking = false;
+    Vector2 direction = Vector2.zero;
+    Vector2 area = Vector2.zero;
+
+    float attackTime=0;
+    float cooldown =2.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,56 +64,81 @@ public class Enemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+
+    private void Update()
     {
+        
         //bucar jugador
         if(target == null)
         {
             target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         }
 
-        if(TargetInDistance() && pathfindingEnabled)
+        if (Vector2.Distance(transform.position, target.transform.position) <= attackRange * 1.5f)
         {
-            if (!playerTracking)
-            {
-                target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-                playerTracking = true;
-                anim.SetBool("detectado", playerTracking);
-            }
-                
-            PathFollow();
-
+            Debug.Log("IM ATTACKING!!");
+            attack(target.transform.position - transform.position);
+            
         }
+
+        /*
+        if (imAttacking)
+        {
+            checkAttackFinished();
+        }*/
+    }
+    void FixedUpdate()
+    {
+        if (target == null)
+        {
+            target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        }
+
+        if (TargetInDistance() && pathfindingEnabled)
+            {
+                if (!playerTracking)
+                {
+                    target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+                    playerTracking = true;
+                    anim.SetBool("detectado", playerTracking);
+                }
+
+                PathFollow();
+
+            }
+
+
+            // Volver a la posicion inicial
+            if (!TargetInDistance() && pathfindingEnabled)
+            {
+                if (playerTracking)
+                {
+                    playerTracking = false;
+                    seeker.StartPath(rb.position, homePosition, OnPathComplete);
+                }
+
+                PathFollow();
+
+                if (reachedEndOfPath)
+                {
+                    rb.velocity = new Vector2();
+                    anim.SetBool("detectado", playerTracking);
+                    waitTime -= Time.deltaTime;
+                }
+
+                if (patrol && waitTime <= 0)
+                {
+                    seeker.StartPath(rb.position,
+                        new Vector2(Random.Range(rb.position.x - patrolDistance, rb.position.x + patrolDistance),
+                        Random.Range(rb.position.y - patrolDistance, rb.position.y + patrolDistance)), OnPathComplete);
+                    waitTime = Random.Range(startWaitTime, maxWaitTime);
+                    anim.SetBool("detectado", true);
+                }
+
+            }
+
 
         
-        // Volver a la posicion inicial
-        if (!TargetInDistance() && pathfindingEnabled)
-        {
-            if (playerTracking)
-            {
-                playerTracking = false;
-                seeker.StartPath(rb.position, homePosition, OnPathComplete);
-            }
-
-            PathFollow();
-
-            if (reachedEndOfPath)
-            {
-                rb.velocity = new Vector2();
-                anim.SetBool("detectado", playerTracking);
-                waitTime -= Time.deltaTime;
-            }
-
-            if (patrol && waitTime <= 0)
-            {
-                seeker.StartPath(rb.position, 
-                    new Vector2(Random.Range(rb.position.x - patrolDistance, rb.position.x + patrolDistance),
-                    Random.Range(rb.position.y - patrolDistance, rb.position.y + patrolDistance)), OnPathComplete);
-                waitTime = Random.Range(startWaitTime,maxWaitTime);
-                anim.SetBool("detectado", true);
-            }
-
-        }
     }
 
     void UpdatePath()
@@ -152,7 +185,7 @@ public class Enemy : MonoBehaviour
         }
 
         //Direccion de los sprite
-        anim.speed = 1;
+        //anim.speed = 1;
         anim.SetFloat("moveX", direction.x);
         anim.SetFloat("moveY", direction.y);
     }
@@ -171,11 +204,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, activateDistance);
-    }
+    
 
     public void TakeDamage(int damage)
     {
@@ -203,9 +232,54 @@ public class Enemy : MonoBehaviour
                 Instantiate(potion, this.transform.position, Quaternion.identity);
                 break;
         }
-        Destroy(this.gameObject, 0.6f);
+        Destroy(this.gameObject,0.3f);
 
 
     }
+
+
+    void attack(Vector3 vect)
+    {
+        if(cooldown<= Time.time-attackTime){
+
+            direction = new Vector2(vect.x, vect.y).normalized;
+
+            anim.SetTrigger("Attack");
+
+            anim.SetFloat("DirX", direction.x);
+            anim.SetFloat("DirY", direction.y);
+            int damage = 5;
+            area = new Vector2(this.transform.position.x + (direction.x * attackRange), this.transform.position.y + (direction.y * attackRange));
+            Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(area, 0.5f);
+
+            foreach (Collider2D player in hitPlayer)
+            {
+                if (player.TryGetComponent<PlayerManagement>(out PlayerManagement componente))
+                {
+                    componente.takeDamage(damage);
+                    SoundManager.PlaySound("enemyAttack");
+                }
+            }
+        attackTime = Time.time;
+
+         }
+
+
+
+
+    }
+
+    void OnDrawGizmos()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(new Vector3(area.x, area.y, 1), 0.5f);
+    }
+
+
+
+
+
+
 
 }
