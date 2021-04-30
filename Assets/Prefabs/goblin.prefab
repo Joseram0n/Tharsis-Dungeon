@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2482976050705745545}
   - component: {fileID: 2482976050705745546}
   m_Layer: 0
-  m_Name: goblin 1
+  m_Name: goblin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4573242522847895149}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 23.539999, y: 14.700001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -178,6 +178,9 @@ MonoBehaviour:
   patrolDistance: 6
   startWaitTime: 1
   maxWaitTime: 4.59
+  coin: {fileID: 7017282487334369700, guid: 50df11d83fe9a624fa9e864ef1751c93, type: 3}
+  arrow: {fileID: 4161363004157950921, guid: cc0dbe1b3cf6dbd45a3840cbb7c70100, type: 3}
+  potion: {fileID: 2807783849674432743, guid: 8e96e3f3900093347b1d2668f2674176, type: 3}
 --- !u!114 &2482976050705745546
 MonoBehaviour:
   m_ObjectHideFlags: 0

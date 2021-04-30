@@ -36,6 +36,10 @@ public class Enemy : MonoBehaviour
     Rigidbody2D rb;
     Animator anim;
 
+    public GameObject coin;
+    public GameObject arrow;
+    public GameObject potion;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -165,5 +169,37 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, activateDistance);
     }
+
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            die();
+        }
+    }
+    void die()
+    {
+        anim.SetTrigger("die");
+        int item = Random.Range(1, 3);
+        switch (item)
+        {
+            case 1: //Monedas
+                Instantiate(coin, this.transform.position, Quaternion.identity);
+
+                break;
+            case 2: //Flechas
+                Instantiate(arrow, this.transform.position, Quaternion.identity);
+                break;
+            case 3: //Pociones
+                Instantiate(potion, this.transform.position, Quaternion.identity);
+                break;
+        }
+        Destroy(this.gameObject, 0.6f);
+
+
+    }
+
 
 }

@@ -5,16 +5,16 @@ using UnityEngine;
 public class TestProjectile : MonoBehaviour
 {
     // Start is called before the first frame update
-    public int damage=20;
+    public int damage = 20;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.name!="Player")
+        if (collision.tag != "Player")
         {
-            if (collision.gameObject.layer==6) //Enemy Layer
+            if (collision.TryGetComponent<Enemy>(out Enemy componente)) //Enemy Layer
             {
                 Debug.Log("I hit him!");
-                collision.GetComponent<EnemyRecieveDamage>().DealDamage(damage);
+                componente.TakeDamage(damage);
             }
             Destroy(gameObject);
         }
