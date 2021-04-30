@@ -10,6 +10,7 @@ public class MenuPrincipal : MonoBehaviour
     public GameObject mainPanel;
     Resolution[] resolutions;
     public Dropdown resolutionsDropdown;
+    public Slider slider;
     // Start is called before the first frame update
     private void Start()
     {
@@ -46,6 +47,7 @@ public class MenuPrincipal : MonoBehaviour
     }
     public void CloseSettings()
     {
+        setVariables();
         settingsPanel.SetActive(false);
         mainPanel.SetActive(true);
     }
@@ -54,6 +56,12 @@ public class MenuPrincipal : MonoBehaviour
 
     public void setVariables()
     {
-        GlobalVariables.Set("Volume", settingsPanel.GetComponent<Slider>().value);
+        float vol = slider.value;
+        Camera.main.GetComponent<AudioSource>().volume = vol;
+        GameVariables.setVolume(vol);
+        Resolution res = resolutions[resolutionsDropdown.value];
+        Debug.Log("width: " + res.width + " height " + res.height);
+        Screen.SetResolution(res.width, res.height, false);
+        GameVariables.setResolution(res);
     }
 }

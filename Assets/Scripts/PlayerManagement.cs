@@ -167,6 +167,7 @@ public class PlayerManagement : MonoBehaviour
             }
             imAttacking = true;
             animator.SetTrigger("Attack");
+            SoundManager.PlaySound("slash");
         }
         else
         {
@@ -178,6 +179,7 @@ public class PlayerManagement : MonoBehaviour
                 shot = true;
                 imAttacking = true;
                 animator.SetTrigger("Attack");
+                SoundManager.PlaySound("shoot");
             }
 
         }
@@ -212,6 +214,7 @@ public class PlayerManagement : MonoBehaviour
     {
         currentHealth -= damage; //Si llega a 0, muere
         display.setHealth(currentHealth);
+        SoundManager.PlaySound("playerHit");
     }
     public void heal()
     {
@@ -242,25 +245,22 @@ public class PlayerManagement : MonoBehaviour
                 cantidad = Random.Range(1, 10);
                 monedas += cantidad;
                 display.setGold(monedas);
-                Debug.Log("+ " + cantidad + " " + nombre + "!");
 
                 break;
             case "Poción(Clone)":
                 cantidad = 1;
                 pociones += cantidad;
                 display.setPots(pociones);
-                Debug.Log("+ " + cantidad + " " + nombre + "!");
 
                 break;
             case "Flecha(Clone)":
                 cantidad = Random.Range(3, 8);
                 flechas += cantidad;
                 display.setAmmo(flechas);
-                Debug.Log("+ " + cantidad + " " + nombre + "!");
 
                 break;
         }
-
+        SoundManager.PlaySound("pickUp");
         enemigosMatados++;
     }
 

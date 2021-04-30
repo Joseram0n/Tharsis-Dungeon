@@ -182,6 +182,7 @@ public class Enemy : MonoBehaviour
     void die()
     {
         anim.SetTrigger("die");
+        SoundManager.PlaySound("enemyDeath");
         int item = Random.Range(1, 3);
         switch (item)
         {

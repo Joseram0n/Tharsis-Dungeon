@@ -10,19 +10,13 @@ public class ItemDrop : MonoBehaviour
     private void Start()
     {
         nombre = this.gameObject.name;
-        Debug.Log("Gameobject name: " + nombre);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Player found!");
         if (collision.tag == "Player")
         {
             collision.GetComponent<PlayerManagement>().GainLoot(nombre);
             Destroy(this.gameObject);
         }
-    }
-    private void OnDestroy()
-    {
-        Debug.Log("me ded");
     }
 }
