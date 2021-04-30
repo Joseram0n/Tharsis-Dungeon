@@ -67,32 +67,34 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (Vector2.Distance(transform.position, target.transform.position) <= attackRange * 1.5f && !imAttacking)
-        if(TargetInDistance() && pathfindingEnabled)
+        
         //bucar jugador
         if(target == null)
         {
             target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         }
 
-        if(TargetInDistance() && pathfindingEnabled)
+        if (Vector2.Distance(transform.position, target.transform.position) <= attackRange * 1.5f)
         {
             Debug.Log("IM ATTACKING!!");
             attack(target.transform.position - transform.position);
             
         }
 
-
+        /*
         if (imAttacking)
         {
             checkAttackFinished();
-        }
+        }*/
     }
     void FixedUpdate()
     {
-        
-            
-            if (TargetInDistance() && pathfindingEnabled && !imAttacking)
+        if (target == null)
+        {
+            target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        }
+
+        if (TargetInDistance() && pathfindingEnabled)
             {
                 if (!playerTracking)
                 {
@@ -107,7 +109,7 @@ public class Enemy : MonoBehaviour
 
 
             // Volver a la posicion inicial
-            if (!TargetInDistance() && pathfindingEnabled && !imAttacking)
+            if (!TargetInDistance() && pathfindingEnabled)
             {
                 if (playerTracking)
                 {
@@ -183,7 +185,7 @@ public class Enemy : MonoBehaviour
         }
 
         //Direccion de los sprite
-        anim.speed = 1;
+        //anim.speed = 1;
         anim.SetFloat("moveX", direction.x);
         anim.SetFloat("moveY", direction.y);
     }
@@ -238,9 +240,7 @@ public class Enemy : MonoBehaviour
 
     void attack(Vector3 vect)
     {
-        Debug.Log("TIMER: " + (Time.time - attackTime));
-        if(!imAttacking && cooldown<= Time.deltaTime-attackTime){
-            imAttacking = true;
+        if(cooldown<= Time.time-attackTime){
 
             direction = new Vector2(vect.x, vect.y).normalized;
 
@@ -248,7 +248,7 @@ public class Enemy : MonoBehaviour
 
             anim.SetFloat("DirX", direction.x);
             anim.SetFloat("DirY", direction.y);
-            int damage = 1;
+            int damage = 5;
             area = new Vector2(this.transform.position.x + (direction.x * attackRange), this.transform.position.y + (direction.y * attackRange));
             Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(area, 0.5f);
 
@@ -260,12 +260,11 @@ public class Enemy : MonoBehaviour
                     SoundManager.PlaySound("enemyAttack");
                 }
             }
+        attackTime = Time.time;
 
-            attackTime = Time.time;
+         }
 
-        }
-        
-        
+
 
 
     }
@@ -279,20 +278,6 @@ public class Enemy : MonoBehaviour
 
 
 
-
-    void checkAttackFinished()
-    {
-        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("goblin_attack"))
-        {
-            Debug.Log("Setting False");
-            imAttacking = false;
-        }
-            
-        else
-        {
-            Debug.Log("MUAHAHAHAHAHA");
-        }
-    }
 
 
 
