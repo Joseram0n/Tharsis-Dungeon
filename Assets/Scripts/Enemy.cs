@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
     int currentWaypoint = 0;
     bool playerTracking = false;
     Vector2 homePosition;
-    bool reachedEndOfParh = false;
+    bool reachedEndOfPath = false;
 
     Seeker seeker;
     Rigidbody2D rb;
@@ -83,7 +83,7 @@ public class Enemy : MonoBehaviour
 
             PathFollow();
 
-            if (reachedEndOfParh)
+            if (reachedEndOfPath)
             {
                 rb.velocity = new Vector2();
                 anim.SetBool("detectado", playerTracking);
@@ -114,19 +114,19 @@ public class Enemy : MonoBehaviour
     {
         if(path == null)
         {
-            reachedEndOfParh = true;
+            reachedEndOfPath = true;
             return;
         }
 
         //llega al final del camino
         if(currentWaypoint >= path.vectorPath.Count)
         {
-            reachedEndOfParh = true;
+            reachedEndOfPath = true;
             return;
         }
         else
         {
-            reachedEndOfParh = false;
+            reachedEndOfPath = false;
         }
 
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
@@ -200,7 +200,5 @@ public class Enemy : MonoBehaviour
 
 
     }
-
-
 
 }
