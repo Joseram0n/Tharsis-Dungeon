@@ -4,6 +4,8 @@ using UnityEngine;
 
 public static class GameVariables
 {
+    static float Volume=0.2f;
+    static float Volume;
     static float Volume = 0.5f;
     static Resolution resolution;
     public static void setVolume(float vol)
