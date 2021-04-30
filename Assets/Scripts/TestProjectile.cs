@@ -11,12 +11,12 @@ public class TestProjectile : MonoBehaviour
     {
         if(collision.tag!="Player")
         {
-            if (collision.TryGetComponent<Enemy>(out Enemy componente)) //Enemy Layer
+            if (collision.TryGetComponent<Enemy>(out Enemy componente))
             {
                 Debug.Log("I hit him!");
                 componente.TakeDamage(damage);
             }
-            Destroy(gameObject);
+            Destroy(gameObject,0.5f);
         }
     }
 }

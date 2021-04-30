@@ -212,6 +212,7 @@ public class PlayerManagement : MonoBehaviour
 
     public void takeDamage(int damage)
     {
+        Debug.Log("IM HIT");
         currentHealth -= damage; //Si llega a 0, muere
         display.setHealth(currentHealth);
         SoundManager.PlaySound("playerHit");
