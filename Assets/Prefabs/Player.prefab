@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 7538199422928690394}
   - component: {fileID: 3163638857919265024}
   m_Layer: 0
-  m_Name: Player 1
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,8 +96,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -5128796963256370029, guid: ebefa4c20470c8640ac0680373077221,
-    type: 3}
+  m_Sprite: {fileID: -5128796963256370029, guid: ebefa4c20470c8640ac0680373077221, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -159,6 +158,7 @@ MonoBehaviour:
   damage: 20
   arrow: {fileID: 4374591444793941668, guid: f80aa0bfd1fe4b7499dd8d31425e8990, type: 3}
   projectileForce: 5
+  fireTime: 0.8
   flechas: 10
   monedas: 0
   pociones: 1

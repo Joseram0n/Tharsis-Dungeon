@@ -31,7 +31,7 @@ public class PlayerManagement : MonoBehaviour
     public float projectileForce = 5f;
     private Rigidbody2D rb;
     private bool shot = false;
-    private float fireTime = 0.9f;
+    public float fireTime = 0.8f;
     private float fireTimer;
 
     private PlayerMovement pm;

@@ -58,6 +58,12 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        //bucar jugador
+        if(target == null)
+        {
+            target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        }
+
         if(TargetInDistance() && pathfindingEnabled)
         {
             if (!playerTracking)

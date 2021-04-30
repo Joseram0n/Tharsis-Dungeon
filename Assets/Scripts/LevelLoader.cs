@@ -11,6 +11,7 @@ public class LevelLoader : MonoBehaviour
     public BoxCollider2D player_collider2D;
 
     public int numeroEscenaDestino;
+    public float tiempoEspera;
     
     void LoadDungeonLevel()
     {
@@ -20,28 +21,37 @@ public class LevelLoader : MonoBehaviour
      IEnumerator LoadLevel(int nivel)
      {
         crossfade.SetActive(true);
-        crossfade.GetComponent<Animator>().SetTrigger("End");
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(tiempoEspera);
 
         SceneManager.LoadScene(nivel);
-     }
+
+        crossfade.GetComponent<Animator>().SetTrigger("End");
+    }
 
 
-
-    // Start is called before the first frame update
     void Start()
     {
         crossfade.SetActive(false);
+        player_collider2D = GameObject.FindGameObjectWithTag("Player").GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(gateDungeon.IsTouching(player_collider2D))
+        if(player_collider2D != null)
         {
-            LoadDungeonLevel();
+            if (gateDungeon.IsTouching(player_collider2D))
+            {
+                LoadDungeonLevel();
+            }
         }
+        else
+        {
+            player_collider2D = GameObject.Find("Player").GetComponent<BoxCollider2D>();
+        }
+
     }
+
 
 }
