@@ -182,11 +182,12 @@ public class Enemy : MonoBehaviour
     void die()
     {
         anim.SetTrigger("die");
+        SoundManager.PlaySound("enemyDeath");
         int item = Random.Range(1, 3);
-        switch(item)
+        switch (item)
         {
             case 1: //Monedas
-                Instantiate(coin, this.transform.position,Quaternion.identity);
+                Instantiate(coin, this.transform.position, Quaternion.identity);
 
                 break;
             case 2: //Flechas
