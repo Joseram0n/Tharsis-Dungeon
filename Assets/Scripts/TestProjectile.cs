@@ -16,7 +16,7 @@ public class TestProjectile : MonoBehaviour
                 Debug.Log("I hit him!");
                 componente.TakeDamage(damage);
             }
-            Destroy(gameObject,0.5f);
+            Destroy(gameObject);
         }
     }
 }

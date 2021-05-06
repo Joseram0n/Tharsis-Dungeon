@@ -8,12 +8,19 @@ public class MenuPrincipal : MonoBehaviour
 {
     public GameObject settingsPanel;
     public GameObject mainPanel;
+    public GameObject scorePanel;
     Resolution[] resolutions;
     public Dropdown resolutionsDropdown;
     public Slider slider;
+    public Text text1;
+    public Text text2;
+    public Text text3;
     // Start is called before the first frame update
     private void Start()
     {
+        text1.text = "";
+        text2.text = "";
+        text3.text = "";
         resolutions=Screen.resolutions;
         resolutionsDropdown.ClearOptions();
         List<string> options = new List<string>();
@@ -64,4 +71,32 @@ public class MenuPrincipal : MonoBehaviour
         Screen.SetResolution(res.width, res.height, false);
         GameVariables.setResolution(res);
     }
+
+    public void verPuntuaciones()
+    {
+        text1.text = "";
+        text2.text = "";
+        text3.text = "";
+        mainPanel.SetActive(false);
+        scorePanel.SetActive(true);
+        List<PlayerScore> players=SaveSystem.LoadPlayers();
+        players.Sort();
+        while(players.Count>10)
+        {
+            players.RemoveAt(players.Count - 1);
+        }
+        foreach(PlayerScore p in players)
+        {
+            text1.text = text1.text + p.name + "\n";
+            text2.text = text2.text + p.getMonedas() + "\n";
+            text3.text = text3.text + p.getKills()+ "\n";
+        }
+    }
+
+    public void closeScore()
+    {
+        scorePanel.SetActive(false);
+        mainPanel.SetActive(true);
+    }
+
 }

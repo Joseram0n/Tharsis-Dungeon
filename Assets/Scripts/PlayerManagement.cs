@@ -216,6 +216,12 @@ public class PlayerManagement : MonoBehaviour
         currentHealth -= damage; //Si llega a 0, muere
         display.setHealth(currentHealth);
         SoundManager.PlaySound("playerHit");
+        if(currentHealth<=0)
+        {
+            SoundManager.PlaySound("defeat");
+            GameVariables.callSetup(monedas, enemigosMatados);
+            //Destroy(this.gameObject);
+        }
     }
     public void heal()
     {

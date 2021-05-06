@@ -147,21 +147,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 100
-  canvas: {fileID: 0}
+  canvas: {fileID: 8068860135400461962, guid: 235600afe45a0804cbc4c811e23c23db, type: 3}
   arco: {fileID: 2225549763712610494, guid: 3cbe805865a77d0458000b625bce0689, type: 3}
   sword: {fileID: -5128796963256370029, guid: ebefa4c20470c8640ac0680373077221, type: 3}
   attackRange: 0.5
   enemyLayers:
     serializedVersion: 2
     m_Bits: 0
-  multiplier: 0
+  multiplier: 0.6
   damage: 20
   arrow: {fileID: 4374591444793941668, guid: f80aa0bfd1fe4b7499dd8d31425e8990, type: 3}
-  projectileForce: 5
+  projectileForce: 7
   fireTime: 0.8
   flechas: 10
   monedas: 0
   pociones: 1
+  x: {fileID: 8957894449233158161, guid: a456c0462759d094790fad1aa9c7adf2, type: 3}
   enemigosMatados: 0
 --- !u!50 &530490346758240192
 Rigidbody2D:
