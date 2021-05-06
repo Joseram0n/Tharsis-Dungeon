@@ -62,6 +62,9 @@ public class SoundManager : MonoBehaviour
             case "enemyAttack":
                 audioSrc.PlayOneShot(goblinSlash);
                 break;
+            case "defeat":
+                audioSrc.PlayOneShot(DefeatSound);
+                break;
 
             
 

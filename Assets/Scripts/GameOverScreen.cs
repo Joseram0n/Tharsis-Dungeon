@@ -8,27 +8,33 @@ public class GameOverScreen : MonoBehaviour
 {
 
     public TextMeshProUGUI scoreTXT;
+    public GameObject UIcoso;
 
-
-    void Setup(int kills,int coins)
+    void Start()
     {
         gameObject.SetActive(true);
-        scoreTXT.text = "Coins: " + coins.ToString() + "\nKills: " + kills.ToString();
+        UIcoso.SetActive(false);
+        Debug.Log("MI PAPA: " + UIcoso.transform.parent.gameObject.activeInHierarchy);
+    }
+    public void Setup(int monedas, int kills)
+    {
+        //gameObject.SetActive(true);
+        UIcoso.SetActive(true);
+        Time.timeScale = 0f;
+        scoreTXT.text = "Coins: " + monedas.ToString() + "\nKills: " + kills.ToString();
     }
 
 
     public void ExitMenu()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("Menu Principal");
     }
 
 
 
     // Start is called before the first frame update
-    void Start()
-    {
-        gameObject.SetActive(false);
-    }
+    
 
     //// Update is called once per frame
     //void Update()

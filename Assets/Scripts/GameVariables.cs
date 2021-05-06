@@ -22,4 +22,8 @@ public static class GameVariables
     {
         return resolution;
     }
+    public static void callSetup(int gold, int kills)
+    {
+        GameObject.Find("GameOverScreen").GetComponent<GameOverScreen>().Setup(gold, kills);
+    }
 }

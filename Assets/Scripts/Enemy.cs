@@ -47,7 +47,7 @@ public class Enemy : MonoBehaviour
     Vector2 area = Vector2.zero;
 
     float attackTime=0;
-    float cooldown =2.0f;
+    float cooldown =1.3f;
 
     // Start is called before the first frame update
     void Start()
@@ -76,7 +76,6 @@ public class Enemy : MonoBehaviour
 
         if (Vector2.Distance(transform.position, target.transform.position) <= attackRange * 1.5f)
         {
-            Debug.Log("IM ATTACKING!!");
             attack(target.transform.position - transform.position);
             
         }
@@ -217,7 +216,14 @@ public class Enemy : MonoBehaviour
     void die()
     {
         anim.SetTrigger("die");
-        SoundManager.PlaySound("enemyDeath");
+        if(enemyName=="boss")
+        {
+            SoundManager.PlaySound("bossDeath");
+        }
+        else
+        {
+            SoundManager.PlaySound("enemyDeath");
+        }
         int item = Random.Range(1, 3);
         switch (item)
         {
@@ -257,7 +263,13 @@ public class Enemy : MonoBehaviour
                 if (player.TryGetComponent<PlayerManagement>(out PlayerManagement componente))
                 {
                     componente.takeDamage(damage);
-                    SoundManager.PlaySound("enemyAttack");
+                    if(enemyName=="BOSS")
+                    {
+                        SoundManager.PlaySound("bossAttack");
+                    }
+                    else
+                        SoundManager.PlaySound("enemyAttack");
+
                 }
             }
         attackTime = Time.time;
