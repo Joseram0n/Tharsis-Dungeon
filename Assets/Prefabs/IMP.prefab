@@ -203,9 +203,10 @@ MonoBehaviour:
   pathfindingEnabled: 1
   pathUpdateSeconds: 0.5
   patrol: 1
-  patrolDistance: 6
+  patrolDistance: 4
   startWaitTime: 1
-  maxWaitTime: 8
+  maxWaitTime: 6
   arrow: {fileID: 4374591444793941668, guid: f80aa0bfd1fe4b7499dd8d31425e8990, type: 3}
   coin: {fileID: 7017282487334369700, guid: 50df11d83fe9a624fa9e864ef1751c93, type: 3}
   potion: {fileID: 2807783849674432743, guid: 99e1c02c962e58b49be493b0ec653843, type: 3}
+  imAttacking: 0
