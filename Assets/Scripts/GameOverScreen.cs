@@ -9,6 +9,10 @@ public class GameOverScreen : MonoBehaviour
 
     public TextMeshProUGUI scoreTXT;
     public GameObject UIcoso;
+    public TextMeshProUGUI entername;
+    public TMP_InputField field;
+    int coins;
+    int kills;
 
     void Start()
     {
@@ -18,6 +22,8 @@ public class GameOverScreen : MonoBehaviour
     }
     public void Setup(int monedas, int kills)
     {
+        coins = monedas;
+        this.kills = kills;
         //gameObject.SetActive(true);
         UIcoso.SetActive(true);
         Time.timeScale = 0f;
@@ -27,8 +33,21 @@ public class GameOverScreen : MonoBehaviour
 
     public void ExitMenu()
     {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("Menu Principal");
+        string cadena = field.text;
+        if (cadena!=null)
+        {
+            entername.text = "";
+            string nombre = cadena;
+            PlayerScore score = new PlayerScore(coins, kills, nombre);
+            SaveSystem.SavePlayer(score);
+            Time.timeScale = 1f;
+            SceneManager.LoadScene("Menu Principal");
+        }
+        else
+        {
+            entername.text = "¡Debe ingresar un nombre primero!";
+        }
+        
     }
 
 
